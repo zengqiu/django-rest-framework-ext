@@ -77,35 +77,35 @@ class DepartmentTreeListSerializer(serializers.ModelSerializer):
 
 ```
 [{
-	"id": 1,
-	"children": [{
-		"id": 2,
-		"children": [{
-			"id": 3,
-			"children": [{
-				"id": 4,
-				"children": [],
-				"name": "aaa",
-				"parent": 3
-			}],
-			"name": "ddd",
-			"parent": 2
-		}, {
-			"id": 5,
-			"children": [{
-				"id": 6,
-				"children": [],
-				"name": "eee",
-				"parent": 7
-			}],
-			"name": "xxx",
-			"parent": 2
-		}],
-		"name": "yyy",
-		"parent": 1
-	}],
-	"name": "zzz",
-	"parent": null
+    "id": 1,
+    "children": [{
+        "id": 2,
+        "children": [{
+            "id": 3,
+            "children": [{
+                "id": 4,
+                "children": [],
+                "name": "aaa",
+                "parent": 3
+            }],
+            "name": "ddd",
+            "parent": 2
+        }, {
+            "id": 5,
+            "children": [{
+                "id": 6,
+                "children": [],
+                "name": "eee",
+                "parent": 7
+            }],
+            "name": "xxx",
+            "parent": 2
+        }],
+        "name": "yyy",
+        "parent": 1
+    }],
+    "name": "zzz",
+    "parent": null
 }]
 ```
 
