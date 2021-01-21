@@ -121,8 +121,10 @@ Some exception handlers.
 
 ### Usage: 
 
+```
 REST_FRAMEWORK = {
     ...
     'EXCEPTION_HANDLER': 'djangorestframework_ext.views.exception_handler',
     ...
 }
+```
