@@ -109,6 +109,40 @@ class DepartmentTreeListSerializer(serializers.ModelSerializer):
 }]
 ```
 
+ExportModelSerializer
+---------------------
+
+Use verbose name or label replace field name.
+
+### Usage:
+
+```
+from djangorestframework_ext.serializers import ExportModelSerializer
+from django.db import models
+
+
+class Department(models.Model):
+    name = models.CharField('Name', max_length=100)
+    creator = models.ForeignKey(User, null=False, verbose_name='Creator')
+
+
+class DepartmentExportSerializer(ExportModelSerializer):
+    creator = serializers.StringRelatedField(label='Creator', read_only=True)
+    
+    class Meta:
+        model = Department
+        fields = ['name', 'creator']
+```
+
+### Response:
+
+```
+[{
+    "Name": "aaa",
+    "Creator": "John"
+}]
+```
+
 DEFAULT_QUERY_PARAMS
 --------------------
 
