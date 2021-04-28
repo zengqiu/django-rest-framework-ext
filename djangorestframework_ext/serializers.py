@@ -14,9 +14,10 @@ class ExportModelSerializer(serializers.ModelSerializer):
         data = super().to_representation(obj)
         result = dict()
         for k, v in data.items():
-            if isinstance(self.get_fields()[k], serializers.DateTimeField) and v:
+            field = self.get_fields()[k]
+            if isinstance(field, serializers.DateTimeField) and v:
                 value = dateformat.format(parse_datetime(v), 'Y-m-d H:i:s')
             else:
                 value = v
-            result[getattr(self.get_fields()[k], 'label')] = value
+            result[str(getattr(field, 'label'))] = value
         return result
