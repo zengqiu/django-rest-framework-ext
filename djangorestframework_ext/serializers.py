@@ -19,5 +19,5 @@ class ExportModelSerializer(serializers.ModelSerializer):
                 value = dateformat.format(parse_datetime(v), 'Y-m-d H:i:s')
             else:
                 value = v
-            result[str(getattr(field, 'label')) or k] = value
+            result[getattr(field, 'label') or k] = value
         return result
