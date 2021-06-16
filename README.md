@@ -143,6 +143,11 @@ class DepartmentExportSerializer(ExportModelSerializer):
 }]
 ```
 
+DynamicFieldsModelSerializer
+----------------------------
+
+It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
+
 DEFAULT_QUERY_PARAMS
 --------------------
 
