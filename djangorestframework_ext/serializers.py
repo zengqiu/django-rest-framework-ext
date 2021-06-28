@@ -5,7 +5,13 @@ from django.utils.dateparse import parse_datetime
 
 class RecursiveSerializer(serializers.Serializer):
     def to_representation(self, value):
-        serializer = self.parent.parent.__class__(value, context=self.context)
+        kwargs = {
+            'context': self.context
+        }
+        if issubclass(self.parent.parent.__class__, DynamicFieldsModelSerializer):
+            kwargs['fields'] = self.parent.parent.fields
+
+        serializer = self.parent.parent.__class__(value, **kwargs)
         return serializer.data
 
 
