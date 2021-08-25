@@ -1,6 +1,29 @@
 from rest_framework import serializers
 from django.utils import dateformat
 from django.utils.dateparse import parse_datetime
+from django.db.models import ManyToManyRel
+
+
+class ModelSerializer(serializers.ModelSerializer):
+    @property
+    def errors(self):
+        errors = {}
+
+        for field_name, error in super().errors.items():
+            errors[self.get_field_label(field_name)] = error
+        return errors
+
+    def get_field_label(self, name):
+        label = getattr(self.get_fields()[name], 'label')
+        if not label:
+            field = self.Meta.model._meta.get_field(name)
+            if hasattr(field, 'verbose_name'):
+                label = field.verbose_name
+            elif isinstance(field, ManyToManyRel):
+                label = field.related_model._meta.verbose_name
+            else:
+                label = name
+        return label
 
 
 class RecursiveSerializer(serializers.Serializer):
@@ -15,7 +38,7 @@ class RecursiveSerializer(serializers.Serializer):
         return serializer.data
 
 
-class ExportModelSerializer(serializers.ModelSerializer):
+class ExportModelSerializer(ModelSerializer):
     def to_representation(self, obj):
         data = super().to_representation(obj)
         result = dict()
@@ -25,12 +48,12 @@ class ExportModelSerializer(serializers.ModelSerializer):
                 value = dateformat.format(parse_datetime(v), 'Y-m-d H:i:s')
             else:
                 value = v
-            result[str(getattr(field, 'label') or k)] = value
+            result[self.get_field_label(k)] = value
         return result
 
 
 # https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields
-class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+class DynamicFieldsModelSerializer(ModelSerializer):
     """
     A ModelSerializer that takes an additional `fields` argument that
     controls which fields should be displayed.
