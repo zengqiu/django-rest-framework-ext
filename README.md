@@ -3,15 +3,15 @@ Django REST framework Ext
 
 Some extensions of Django REST framework.
 
+# Pagination
 
-DynamicSizePageNumberPagination
--------------------------------
+## DynamicSizePageNumberPagination
 
-Support using ``limit`` parameter to specify the page size for querying.
+Support setting `PAGE_QUERY_PARAM` (default is `page`) parameter to specify the page size for querying.
 
-Return all data when the ``page`` parameter is not specified.
+Return all data when the `PAGE_QUERY_PARAM` (default is `limit`) parameter is not specified.
 
-### Usage:
+Usage:
 
 ```
 REST_FRAMEWORK = {
@@ -19,40 +19,46 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'djangorestframework_ext.pagination.DynamicSizePageNumberPagination',
     ...
 }
+
+REST_FRAMEWORK_EXT = {
+    'PAGE_QUERY_PARAM': 'page',  # Default is page (If not set)
+    'PAGE_SIZE_QUERY_PARAM': 'limit',
+}
 ```
 
-### Request:
+Request:
 
 ```
 GET https://api.example.org/accounts/?page=4&limit=100
 ```
 
-DjangoModelPermissions
-----------------------
+# Permissions
+
+## DjangoModelPermissions
 
 Add ``view`` permission control.
 
-### Usage:
+Usage:
 
 ```
 from djangorestframework_ext.permissions import DjangoModelPermissions
 ```
 
-IsCurrentUser
--------------
+## IsCurrentUser
 
 Determine whether it is the current login user.
 
-### Usage:
+Usage:
 
 ```
 from djangorestframework_ext.permissions import IsCurrentUser
 ```
 
-RecursiveSerializer
--------------------
+# Serializers
 
-### Usage:
+## RecursiveSerializer
+
+Usage:
 
 ```
 from rest_framework import serializers
@@ -73,7 +79,7 @@ class DepartmentTreeListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 ```
 
-### Response:
+Response:
 
 ```
 [{
@@ -109,12 +115,11 @@ class DepartmentTreeListSerializer(serializers.ModelSerializer):
 }]
 ```
 
-ExportModelSerializer
----------------------
+## ExportModelSerializer
 
 Use verbose name or label replace field name.
 
-### Usage:
+Usage:
 
 ```
 from djangorestframework_ext.serializers import ExportModelSerializer
@@ -134,7 +139,7 @@ class DepartmentExportSerializer(ExportModelSerializer):
         fields = ['name', 'creator']
 ```
 
-### Response:
+Response:
 
 ```
 [{
@@ -143,22 +148,23 @@ class DepartmentExportSerializer(ExportModelSerializer):
 }]
 ```
 
-DynamicFieldsModelSerializer
-----------------------------
+## DynamicFieldsModelSerializer
 
 It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
 
-DEFAULT_QUERY_PARAMS
---------------------
+# Utils
 
-Default query params: ``page_query_param``, ``page_size_query_param`` and ``ORDERING_PARAM``.
+## get_default_query_params
 
-exception_handler
------------------
+Get default query params.
+
+# Views
+
+## exception_handler
 
 Some exception handlers.
 
-### Usage: 
+Usage: 
 
 ```
 REST_FRAMEWORK = {

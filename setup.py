@@ -8,12 +8,12 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='djangorestframework-ext',
-    version='0.10',
+    version='0.11',
     url='https://github.com/zengqiu/django-rest-framework-ext',
     license='MIT',
     author='zengqiu',
     author_email='zengqiu@qq.com',
-    description='Extensions of Django Rest framework',
+    description='Django Rest framework Extensions',
     long_description=readme,
     long_description_content_type='text/markdown',
     packages=find_packages(),
@@ -33,6 +33,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ]
