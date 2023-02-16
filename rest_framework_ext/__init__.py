@@ -1,5 +1,6 @@
-from __future__ import absolute_import
+from pkg_resources import DistributionNotFound, get_distribution
 
-
-name = 'djangorestframework-ext'
-__version__ = '0.12'
+try:
+    __version__ = get_distribution('djangorestframework-ext').version
+except DistributionNotFound:
+    pass

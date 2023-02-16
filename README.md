@@ -152,6 +152,30 @@ Response:
 
 It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
 
+
+# Mixins
+
+## MultiFieldLookupMixin
+
+Used for multi field lookup.
+
+Usage:
+
+views.py:
+
+```
+class ExampleViewSet(MultipleFieldLookupMixin, viewsets.ModelViewSet):
+    lookup_fields = ['pk', 'field_one', 'field_two']
+```
+
+urls.py:
+
+```
+urlpatterns = [
+    path(r'examples/<str:field_one>/<str:field_two>/', views.ExampleViewSet.as_view({'get': 'retrieve'}))
+]
+```
+
 # Utils
 
 ## get_default_query_params
