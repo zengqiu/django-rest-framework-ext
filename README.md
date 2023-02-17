@@ -157,6 +157,8 @@ It's copied from [official document](https://www.django-rest-framework.org/api-g
 
 ## MultiFieldLookupMixin
 
+From [Multiple lookup_fields for django rest framework](https://stackoverflow.com/questions/38461366/multiple-lookup-fields-for-django-rest-framework).
+
 Used for multi field lookup.
 
 Usage:

@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404
 
 
 class MultiFieldLookupMixin:
-    """From: https://stackoverflow.com/questions/38461366/multiple-lookup-fields-for-django-rest-framework"""
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         filter_kwargs = {}
