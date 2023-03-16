@@ -8,7 +8,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='djangorestframework-ext',
-    version='0.13',
+    version='0.14',
     url='https://github.com/zengqiu/django-rest-framework-ext',
     license='MIT',
     author='zengqiu',
@@ -18,7 +18,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages(),
     platforms='any',
-    install_requires=['django>=2.2', 'djangorestframework>=3.10.0'],
+    install_requires=['django>=3.2', 'djangorestframework>=3.10.0'],
     python_requires='>=3.5',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
