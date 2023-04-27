@@ -14,7 +14,7 @@ class ModelSerializer(serializers.ModelSerializer):
         return errors
 
     def get_field_label(self, name):
-        label = str(getattr(self.get_fields()[name], 'label'))
+        label = str(getattr(self.get_fields()[name], 'label') or '')
         if not label:
             field = self.Meta.model._meta.get_field(name)
             if hasattr(field, 'verbose_name'):
@@ -23,7 +23,7 @@ class ModelSerializer(serializers.ModelSerializer):
                 label = field.related_model._meta.verbose_name
             else:
                 label = name
-        return label
+        return str(label)
 
 
 class RecursiveSerializer(serializers.Serializer):
