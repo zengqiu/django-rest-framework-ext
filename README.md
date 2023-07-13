@@ -46,12 +46,22 @@ from djangorestframework_ext.permissions import DjangoModelPermissions
 
 ## IsCurrentUser
 
-Determine whether it is the current login user.
+Determine whether the object is the current login user.
 
 Usage:
 
 ```
 from djangorestframework_ext.permissions import IsCurrentUser
+```
+
+## IsSuperuser
+
+Determine whether the request user is superuser.
+
+Usage:
+
+```
+from djangorestframework_ext.permissions import IsSuperuser
 ```
 
 # Serializers

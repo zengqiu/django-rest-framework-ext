@@ -13,6 +13,11 @@ class IsCurrentUser(permissions.BasePermission):
         return obj == request.user
 
 
+class IsSuperuser(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_superuser)
+
+
 class ExportPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if view.action == 'export':
