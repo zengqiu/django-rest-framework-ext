@@ -162,6 +162,7 @@ Response:
 
 It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
 
+When using `DynamicFieldsModelSerializer`, the settings in `Meta` such as `exclude` and `fields` are ignored. Instead, the `fields` specified in the parameter that is passed in will take precedence.
 
 # Mixins
 

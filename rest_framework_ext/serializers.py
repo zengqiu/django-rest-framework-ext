@@ -63,12 +63,24 @@ class DynamicFieldsModelSerializer(ModelSerializer):
         # Don't pass the 'fields' arg up to the superclass
         fields = kwargs.pop('fields', None)
 
-        # Instantiate the superclass normally
-        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
+        if fields:
+            if hasattr(self.Meta, 'exclude'):
+                delattr(self.Meta, 'exclude')
 
-        if fields is not None:
+            model = getattr(self.Meta, 'model')
+            property_fields = {name for name in dir(model) if isinstance(getattr(model, name), property)}
+
+            self.Meta.fields = list(
+                set([field.name for field in model._meta._get_fields(reverse=False)]) |
+                property_fields |
+                set(self._declared_fields)
+            )
+
             # Drop any fields that are not specified in the `fields` argument.
             allowed = set(fields)
             existing = set(self.fields)
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
+
+        # Instantiate the superclass normally
+        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
