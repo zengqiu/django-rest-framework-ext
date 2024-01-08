@@ -206,3 +206,18 @@ REST_FRAMEWORK = {
     ...
 }
 ```
+
+# Validators
+
+## ActiveValidator
+
+Validate whether the corresponding object is active using the specified key (default is `is_active`) and value (default is `True`).
+
+Usage:
+
+```
+from rest_framework import serializers
+
+class MySerializer(serializers.ModelSerializer):
+    relation = serializers.PrimaryKeyRelatedField(queryset=Relation.objects.all(), validators=[ActiveValidator()])
+```
