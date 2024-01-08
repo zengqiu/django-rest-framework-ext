@@ -34,16 +34,6 @@ GET https://api.example.org/accounts/?page=4&limit=100
 
 # Permissions
 
-## DjangoModelPermissions
-
-Add ``view`` permission control.
-
-Usage:
-
-```
-from djangorestframework_ext.permissions import DjangoModelPermissions
-```
-
 ## IsCurrentUser
 
 Determine whether the object is the current login user.
