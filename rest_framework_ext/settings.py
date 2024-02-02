@@ -1,6 +1,7 @@
 from django.conf import settings
 from rest_framework.settings import api_settings
 
+
 USER_SETTINGS = getattr(settings, 'REST_FRAMEWORK_EXT', {})
 
 DEFAULTS = {
