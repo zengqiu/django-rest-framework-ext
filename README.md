@@ -54,6 +54,17 @@ Usage:
 from djangorestframework_ext.permissions import IsSuperuser
 ```
 
+## HasPermission
+
+Mainly used for providing permission validation to `@api_view`.
+
+```
+@api_view(['GET'])
+@permission_classes([HasPermission('user.change_user')])
+def change_user(request):
+    ...
+```
+
 # Serializers
 
 ## RecursiveSerializer

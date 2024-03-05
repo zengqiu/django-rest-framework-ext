@@ -11,6 +11,20 @@ class IsSuperuser(BasePermission):
         return bool(request.user and request.user.is_superuser)
 
 
+class HasPermission(BasePermission):
+    permission_codename = ''
+
+    def __init__(self, permission_codename):
+        super().__init__()
+        self.permission_codename = permission_codename
+
+    def __call__(self):
+        return self
+
+    def has_permission(self, request, view):
+        return request.user.has_perm(self.permission_codename)
+
+
 class ExportPermission(BasePermission):
     def has_permission(self, request, view):
         if view.action == 'export':
