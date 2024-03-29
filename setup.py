@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages(),
     platforms='any',
-    install_requires=['django>=3.2', 'djangorestframework>=3.15'],
+    install_requires=['django>=3.2', 'djangorestframework>=3.14.0'],
     python_requires='>=3.5',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
