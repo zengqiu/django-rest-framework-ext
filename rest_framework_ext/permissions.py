@@ -1,17 +1,24 @@
-from rest_framework.permissions import BasePermission
+from rest_framework import permissions
 
 
-class IsCurrentUser(BasePermission):
+class DjangoModelPermissions(permissions.DjangoModelPermissions):
+    def __init__(self):
+        self.perms_map['GET'] = ['%(app_label)s.view_%(model_name)s']
+        self.perms_map['OPTIONS'] = ['%(app_label)s.view_%(model_name)s']
+        self.perms_map['HEAD'] = ['%(app_label)s.view_%(model_name)s']
+
+
+class IsCurrentUser(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj == request.user
 
 
-class IsSuperuser(BasePermission):
+class IsSuperuser(permissions.BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_superuser)
 
 
-class HasPermission(BasePermission):
+class HasPermission(permissions.BasePermission):
     permission_codename = ''
 
     def __init__(self, permission_codename):
@@ -25,7 +32,7 @@ class HasPermission(BasePermission):
         return request.user.has_perm(self.permission_codename)
 
 
-class ExportPermission(BasePermission):
+class ExportPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if view.action == 'export':
             model = view.get_queryset().model
