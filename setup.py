@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='djangorestframework-ext',
-    version='0.21',
+    version='0.22',
     url='https://github.com/zengqiu/django-rest-framework-ext',
     license='MIT',
     author='zengqiu',
