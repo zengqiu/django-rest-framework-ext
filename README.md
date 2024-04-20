@@ -44,6 +44,16 @@ Usage:
 from djangorestframework_ext.permissions import DjangoModelPermissions
 ```
 
+## ReadOnly
+
+Requests will only be permitted if the request method is one of the "safe" methods (`GET`, `HEAD` or `OPTIONS`).
+
+Usage:
+
+```
+from djangorestframework_ext.permissions import ReadOnly
+```
+
 ## IsCurrentUser
 
 Determine whether the object is the current login user.
