@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.utils import dateformat
 from django.utils.dateparse import parse_datetime
+from django.core.exceptions import FieldDoesNotExist
 from django.db.models import ManyToManyRel
 
 
@@ -16,13 +17,17 @@ class ModelSerializer(serializers.ModelSerializer):
     def get_field_label(self, name):
         label = str(getattr(self.get_fields()[name], 'label') or '')
         if not label:
-            field = self.Meta.model._meta.get_field(name)
-            if hasattr(field, 'verbose_name'):
-                label = field.verbose_name
-            elif isinstance(field, ManyToManyRel):
-                label = field.related_model._meta.verbose_name
-            else:
+            try:
+                field = self.Meta.model._meta.get_field(name)
+            except FieldDoesNotExist:
                 label = name
+            else:
+                if hasattr(field, 'verbose_name'):
+                    label = field.verbose_name
+                elif isinstance(field, ManyToManyRel):
+                    label = field.related_model._meta.verbose_name
+                else:
+                    label = name
         return str(label)
 
 
