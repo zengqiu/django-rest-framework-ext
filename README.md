@@ -79,6 +79,9 @@ from djangorestframework_ext.permissions import IsSuperuser
 Mainly used for providing permission validation to `@api_view`.
 
 ```
+from djangorestframework_ext.permissions import HasPermission
+
+
 @api_view(['GET'])
 @permission_classes([HasPermission('user.change_user')])
 def change_user(request):
