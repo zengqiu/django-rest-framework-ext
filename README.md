@@ -36,7 +36,7 @@ GET https://api.example.org/accounts/?page=4&limit=100
 
 ## DjangoModelPermissions
 
-Add ``view`` permission control.
+Add `view` permission control.
 
 Usage:
 
