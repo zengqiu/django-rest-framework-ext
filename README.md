@@ -156,47 +156,6 @@ Response:
 }]
 ```
 
-## ExportModelSerializer
-
-Use verbose name or label replace field name.
-
-Usage:
-
-models.py:
-
-```
-from django.db import models
-
-
-class Department(models.Model):
-    name = models.CharField('Name', max_length=100)
-    created_by = models.ForeignKey(User, null=False, verbose_name='created by')
-```
-
-serializers.py:
-
-```
-from rest_framework import serializers
-from rest_framework_ext.serializers import ExportModelSerializer
-
-
-class DepartmentExportSerializer(ExportModelSerializer):
-    created_by = serializers.StringRelatedField(label='Created By', read_only=True)
-    
-    class Meta:
-        model = Department
-        fields = ['name', 'created_by']
-```
-
-Response:
-
-```
-[{
-    "Name": "aaa",
-    "Created By": "John"
-}]
-```
-
 ## DynamicFieldsModelSerializer
 
 It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
@@ -271,12 +230,6 @@ urlpatterns = [
     path(r'examples/<str:field_one>/<str:field_two>/', views.ExampleViewSet.as_view({'get': 'retrieve'}))
 ]
 ```
-
-# ViewSets
-
-## ExportModelViewSet
-
-Use `epxort` action and `ExportPermission` to exporting data.
 
 # Utils
 
