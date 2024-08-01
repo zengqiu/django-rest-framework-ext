@@ -66,14 +66,22 @@ class DynamicFieldsModelSerializer(ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
-        fields = kwargs.pop('fields', None)
+        fields = kwargs.pop('fields', [])
+        exclude = kwargs.pop('exclude', [])
+
+        assert not (fields and exclude), (
+            "Cannot set both 'fields' and 'exclude' options on "
+            "serializer {serializer_class}.".format(
+                serializer_class=self.__class__.__name__
+            )
+        )
 
         # Instantiate the superclass normally
         super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
+        if fields:
             # Drop any fields that are not specified in the `fields` argument.
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
+            exclude = set(self.fields) - set(fields)
+
+        for field_name in exclude:
+            self.fields.pop(field_name)

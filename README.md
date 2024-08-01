@@ -16,7 +16,7 @@ Usage:
 ```
 REST_FRAMEWORK = {
     ...
-    'DEFAULT_PAGINATION_CLASS': 'djangorestframework_ext.pagination.DynamicSizePageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_ext.pagination.DynamicSizePageNumberPagination',
     ...
 }
 
@@ -41,7 +41,7 @@ Add `view` permission control.
 Usage:
 
 ```
-from djangorestframework_ext.permissions import DjangoModelPermissions
+from rest_framework_ext.permissions import DjangoModelPermissions
 ```
 
 ## ReadOnly
@@ -51,7 +51,7 @@ Requests will only be permitted if the request method is one of the "safe" metho
 Usage:
 
 ```
-from djangorestframework_ext.permissions import ReadOnly
+from rest_framework_ext.permissions import ReadOnly
 ```
 
 ## IsCurrentUser
@@ -61,7 +61,7 @@ Determine whether the object is the current login user.
 Usage:
 
 ```
-from djangorestframework_ext.permissions import IsCurrentUser
+from rest_framework_ext.permissions import IsCurrentUser
 ```
 
 ## IsSuperuser
@@ -71,7 +71,7 @@ Determine whether the request user is superuser.
 Usage:
 
 ```
-from djangorestframework_ext.permissions import IsSuperuser
+from rest_framework_ext.permissions import IsSuperuser
 ```
 
 ## HasPermission
@@ -79,7 +79,7 @@ from djangorestframework_ext.permissions import IsSuperuser
 Mainly used for providing permission validation to `@api_view`.
 
 ```
-from djangorestframework_ext.permissions import HasPermission
+from rest_framework_ext.permissions import HasPermission
 
 
 @api_view(['GET'])
@@ -94,15 +94,22 @@ def change_user(request):
 
 Usage:
 
+models.py:
+
 ```
-from rest_framework import serializers
-from djangorestframework_ext.serializers import RecursiveSerializer
 from django.db import models
 
 
 class Department(models.Model):
     name = models.CharField('Name', max_length=100)
     parent = models.ForeignKey('self', related_name='children', verbose_name='Parent')
+```
+
+serializers.py:
+
+```
+from rest_framework import serializers
+from rest_framework_ext.serializers import RecursiveSerializer
 
 
 class DepartmentTreeListSerializer(serializers.ModelSerializer):
@@ -155,22 +162,30 @@ Use verbose name or label replace field name.
 
 Usage:
 
+models.py:
+
 ```
-from djangorestframework_ext.serializers import ExportModelSerializer
 from django.db import models
 
 
 class Department(models.Model):
     name = models.CharField('Name', max_length=100)
-    creator = models.ForeignKey(User, null=False, verbose_name='Creator')
+    created_by = models.ForeignKey(User, null=False, verbose_name='created by')
+```
+
+serializers.py:
+
+```
+from rest_framework import serializers
+from rest_framework_ext.serializers import ExportModelSerializer
 
 
 class DepartmentExportSerializer(ExportModelSerializer):
-    creator = serializers.StringRelatedField(label='Creator', read_only=True)
+    created_by = serializers.StringRelatedField(label='Created By', read_only=True)
     
     class Meta:
         model = Department
-        fields = ['name', 'creator']
+        fields = ['name', 'created_by']
 ```
 
 Response:
@@ -178,13 +193,51 @@ Response:
 ```
 [{
     "Name": "aaa",
-    "Creator": "John"
+    "Created By": "John"
 }]
 ```
 
 ## DynamicFieldsModelSerializer
 
 It's copied from [official document](https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields).
+
+Use `fields` to specify the fields to be used by a serializer at the point of initializing it.
+
+Or use `exclude` to specify the fields to be excluded by a serializer at the point of initializing it.
+
+Usage:
+
+models.py:
+
+```
+from django.db import models
+
+
+class Parent(models.Model):
+    name = models.CharField('name', max_length=100)
+
+
+class Child(models.Model):
+    name = models.CharField('name', max_length=100)
+    parent = models.ForeignKey(Parent, verbose_name='parent')
+```
+
+serializer.py:
+
+```
+from rest_framework import serializers
+from rest_framework_ext.serializers import DynamicFieldsModelSerializer
+
+
+class ChildSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Child
+        fields = '__all__'
+
+
+class ParentSerializer(serializers.ModelSerializer):
+    children = ChildSerializer(many=True, read_only=True, exclude=['parent'])
+```
 
 # Mixins
 
@@ -199,6 +252,10 @@ Usage:
 views.py:
 
 ```
+from rest_framework import viewsets
+from rest_framework_ext.views import MultipleFieldLookupMixin
+
+
 class ExampleViewSet(MultipleFieldLookupMixin, viewsets.ModelViewSet):
     lookup_fields = ['pk', 'field_one', 'field_two']
 ```
@@ -206,6 +263,10 @@ class ExampleViewSet(MultipleFieldLookupMixin, viewsets.ModelViewSet):
 urls.py:
 
 ```
+from django.urls import path
+from . import views
+
+
 urlpatterns = [
     path(r'examples/<str:field_one>/<str:field_two>/', views.ExampleViewSet.as_view({'get': 'retrieve'}))
 ]
@@ -234,7 +295,7 @@ Usage:
 ```
 REST_FRAMEWORK = {
     ...
-    'EXCEPTION_HANDLER': 'djangorestframework_ext.views.exception_handler',
+    'EXCEPTION_HANDLER': 'rest_framework_ext.views.exception_handler',
     ...
 }
 ```
@@ -249,6 +310,8 @@ Usage:
 
 ```
 from rest_framework import serializers
+from rest_framework_ext.validators import ActiveValidator
+
 
 class MySerializer(serializers.ModelSerializer):
     relation = serializers.PrimaryKeyRelatedField(queryset=Relation.objects.all(), validators=[ActiveValidator()])
