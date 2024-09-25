@@ -54,16 +54,6 @@ Usage:
 from rest_framework_ext.permissions import ReadOnly
 ```
 
-## IsCurrentUser
-
-Determine whether the object is the current login user.
-
-Usage:
-
-```
-from rest_framework_ext.permissions import IsCurrentUser
-```
-
 ## IsSuperuser
 
 Determine whether the request user is superuser.
