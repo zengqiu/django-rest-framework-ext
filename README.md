@@ -190,11 +190,11 @@ class ParentSerializer(serializers.ModelSerializer):
 
 # Mixins
 
-## MultiFieldLookupMixin
+## MultipleFieldLookupMixin
 
-From [Multiple lookup_fields for django rest framework](https://stackoverflow.com/questions/38461366/multiple-lookup-fields-for-django-rest-framework).
+From [Creating custom mixins](https://www.django-rest-framework.org/api-guide/generic-views/#creating-custom-mixins) and [Multiple lookup_fields for django rest framework](https://stackoverflow.com/questions/38461366/multiple-lookup-fields-for-django-rest-framework).
 
-Used for multi field lookup.
+Used for Multiple field lookup.
 
 Usage:
 
