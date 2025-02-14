@@ -202,7 +202,7 @@ views.py:
 
 ```
 from rest_framework import viewsets
-from rest_framework_ext.views import MultipleFieldLookupMixin
+from rest_framework_ext.mixins import MultipleFieldLookupMixin
 
 
 class ExampleViewSet(MultipleFieldLookupMixin, viewsets.ModelViewSet):
@@ -219,6 +219,21 @@ from . import views
 urlpatterns = [
     path(r'examples/<str:field_one>/<str:field_two>/', views.ExampleViewSet.as_view({'get': 'retrieve'}))
 ]
+```
+
+## DisableActionsMixin
+
+Batch disable actions for viewset.
+
+Usage:
+
+```
+from rest_framework import viewsets
+from rest_framework_ext.mixins import DisableActionsMixin
+
+
+class ExampleViewSet(DisableActionsMixin, viewsets.ModelViewSet):
+    disabled_actions = ['retrieve', 'update', 'custom_action']
 ```
 
 # Utils
