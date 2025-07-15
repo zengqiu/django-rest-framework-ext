@@ -32,6 +32,13 @@ Request:
 GET https://api.example.org/accounts/?page=4&limit=100
 ```
 
+If no limit is specified, all data will be returned regardless of the page number.
+
+```
+GET https://api.example.org/accounts/
+GET https://api.example.org/accounts/?page=4
+```
+
 # Permissions
 
 ## DjangoModelPermissions
