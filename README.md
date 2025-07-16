@@ -49,6 +49,19 @@ Usage:
 
 ```
 from rest_framework_ext.permissions import DjangoModelPermissions
+
+class MyModelViewSet(viewsets.ModelViewSet):
+    permission_classes = [DjangoModelPermissions]
+```
+
+Or use globally in `settings.py`:
+
+```
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'djangorestframework_ext.permissions.DjangoModelPermissions',
+    ),
+}
 ```
 
 ## ReadOnly
