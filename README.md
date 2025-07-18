@@ -100,6 +100,10 @@ def change_user(request):
 
 # Serializers
 
+## ModelSerializer
+
+Using verbose name in error messages.
+
 ## RecursiveSerializer
 
 Usage:
