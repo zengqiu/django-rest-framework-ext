@@ -298,3 +298,5 @@ from rest_framework_ext.validators import ActiveValidator
 class MySerializer(serializers.ModelSerializer):
     relation = serializers.PrimaryKeyRelatedField(queryset=Relation.objects.all(), validators=[ActiveValidator()])
 ```
+
+This requires that the `is_active` attribute of `relation` must be set to `true`.
