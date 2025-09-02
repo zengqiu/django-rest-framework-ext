@@ -1,7 +1,7 @@
-from pkg_resources import DistributionNotFound, get_distribution
+from importlib.metadata import version, PackageNotFoundError
 
 
 try:
-    __version__ = get_distribution('djangorestframework-ext').version
-except DistributionNotFound:
+    __version__ = version('djangorestframework-ext')
+except PackageNotFoundError:
     pass
